@@ -46,14 +46,22 @@
                                        href="/neanderthal">О Неандертальцах</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item">
+                        {% if current_user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link disabled" style="color: #006bf6">Логин: {{ current_user.username }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" style="color: #75a2e0" aria-current="page" href="/logout/">Выход</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link active" style="color: #75a2e0" href="#logModal"
+                                   data-bs-toggle="modal">Вход</a>
+                            </li>
+                            <li class="nav-item">
                             <a class="nav-link active" style="color: #75a2e0" href="#regModal"
                                data-bs-toggle="modal">Регистрация</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" style="color: #75a2e0" href="#logModal"
-                               data-bs-toggle="modal">Вход</a>
-                        </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
