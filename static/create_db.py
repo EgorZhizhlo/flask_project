@@ -1,5 +1,7 @@
 import mysql.connector
 
+# admin_key: 7dY5syEJUMWUA6zT8e9BLYCwtirEYNfdJob1kxDThmJ4Tg6hwe880mM9Yi39KrYY57XezpsCRIv5Wb6zSFBiHAcSnEcVPmj5d1LL
+
 mydb = mysql.connector.connect(
     host="127.0.0.1",
     user="root",

@@ -1,0 +1,21 @@
+{% extends "main.html" %}
+{% block contents %}
+    {% if current_user.admin_key != admin_key %}
+        <center>
+            <h1 style="margin-top: 15%; color: #d1dfff">ВЫ НЕ АДМИНИСТРАТОР</h1>
+            <a href="/" class="btn" style="color: #002137; background: #d1dfff; margin-top: 10%"><h3>Главная
+                страница</h3></a>
+        </center>
+    {% else %}
+        <center>
+            <h1 style="margin-top: 13%; color: #d1dfff">ПАНЕЛЬ АДМИНИСТРАТОРА</h1>
+            <a href="/posts_control/" class="btn"
+               style="color: #002137; background: #d1dfff; margin-top: 3%; margin-right: 2%"><h3>Записи</h3></a>
+            <a href="/users_control/" class="btn"
+               style="color: #002137; background: #d1dfff; margin-top: 3%;"><h3>Пользователи</h3></a>
+            <div style="margin-top: 3%">
+                <a href="/" class="btn" style="color: #002137; background: #d1dfff;"><h3>Главная страница</h3></a>
+            </div>
+        </center>
+    {% endif %}
+{% endblock contents %}

@@ -13,3 +13,16 @@ class RegistrationForm(FlaskForm):
 class LoginForm(FlaskForm):
     username = StringField("Username: ", validators=[DataRequired()], name='username')
     password = PasswordField("Email: ", validators=[Length(min=8), EqualTo("repeat_password")], name='password')
+
+
+class ChangeUsername(FlaskForm):
+    username = StringField("Username: ", validators=[DataRequired()], name='username')
+
+
+class ChangeEmail(FlaskForm):
+    email = StringField("Email: ", validators=[Length(min=10, max=120), Email()], name='email')
+
+
+class ChangePassword(FlaskForm):
+    password = PasswordField("Email: ", validators=[Length(min=8, max=25), EqualTo("repeat_password")], name='password')
+    repeat_password = PasswordField("Email: ", validators=[Length(min=8, max=25)], name='repeat_password')

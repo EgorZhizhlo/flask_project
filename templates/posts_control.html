@@ -1,0 +1,21 @@
+{% extends "main.html" %}
+{% block contents %}
+    {% if current_user.admin_key != admin_key %}
+        <center>
+            <h1 style="margin-top: 15%; color: #d1dfff">ВЫ НЕ АДМИНИСТРАТОР</h1>
+            <a href="/" class="btn" style="color: #002137; background: #d1dfff; margin-top: 10%">Главная страница</a>
+        </center>
+    {% else %}
+        <div>
+        </div>
+        <div>
+            <center>
+                <a href="/admin_panel/" class="btn"
+                   style="color: #002137; background: #d1dfff; margin-top: 3%; margin-right: 2%"><h3>
+                    Панель администратора</h3></a>
+                <a href="/" class="btn" style="color: #002137; background: #d1dfff; margin-top: 3%"><h3>
+                    Главная страница</h3></a>
+            </center>
+        </div>
+    {% endif %}
+{% endblock contents %}

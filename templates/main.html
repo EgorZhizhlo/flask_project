@@ -11,6 +11,7 @@
             crossorigin="anonymous"></script>
     {% include 'modal_auntification.html' %}
     {% include 'modal_registration.html' %}
+    {% include 'admin_create_users.html' %}
 </head>
 <body style="background: #002137">
 <header>
@@ -42,16 +43,31 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a style="background: dimgray; color: #bdbdf2" class="dropdown-item"
-                                       href="/neanderthal">О Неандертальцах</a></li>
+                                <li>
+                                    <a style="background: dimgray; color: #bdbdf2"
+                                       class="dropdown-item"
+                                       href="/neanderthal">
+                                        О Неандертальцах
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         {% if current_user.is_authenticated %}
+                            {% if current_user.admin_key == admin_key %}
+                                <li class="nav-item">
+                                    <a class="nav-link active"
+                                       style="color: #006bf6" aria-current="page"
+                                       href="/admin_panel/">Логин: {{ current_user.username }}</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item">
+                                    <a class="nav-link disabled"
+                                       style="color: #006bf6">Логин: {{ current_user.username }}</a>
+                                </li>
+                            {% endif %}
                             <li class="nav-item">
-                                <a class="nav-link disabled" style="color: #006bf6">Логин: {{ current_user.username }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" style="color: #75a2e0" aria-current="page" href="/logout/">Выход</a>
+                                <a class="nav-link active" style="color: #75a2e0" aria-current="page"
+                                   href="/logout/">Выход</a>
                             </li>
                         {% else %}
                             <li class="nav-item">
