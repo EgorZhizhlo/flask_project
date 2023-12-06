@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  app:
+    build: ./DOCKER
+    command: python flask_project/app.py
+    volumes:
+      - .:/flask_project
+    links:
+      - db
+    ports:
+      - "5000:5000"
+  db:
+    image: mysql:5.7
+    ports:
+      - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: NeforMAL_1488
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro
+    restart: always

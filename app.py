@@ -6,7 +6,7 @@ from static.forms import RegistrationForm, LoginForm, ChangeUsername, ChangeEmai
 from flask_login import LoginManager, login_user, UserMixin, login_required, logout_user
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:NeforMAL_1488@localhost/flask_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:NeforMAL_1488@db/flask_db'
 app.config['SECRET_KEY'] = 'a really really really really long secret key'
 db = SQLAlchemy(app)
 manager = LoginManager(app)
@@ -270,4 +270,4 @@ def admin_create_user():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="0.0.0.0")
