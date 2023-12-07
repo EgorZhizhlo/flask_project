@@ -270,6 +270,7 @@ def admin_delete_user(user_id):
 
 
 @app.route('/users_control/create_user', methods=['GET', 'POST'])
+@login_required
 def admin_create_user():
     username = request.form.get('username')
     email = request.form.get('email')
@@ -309,43 +310,71 @@ def admin_delete_post(post_id):
     return redirect(url_for("posts_control"))
 
 
-@app.route('/posts_control/change_t/<int:post_id>', methods=['GET', 'POST'])
+@app.route('/posts_control/change_title/<int:post_id>', methods=['GET', 'POST'])
 def admin_change_title(post_id):
     form = RegistrationForm()
     form1 = LoginForm()
-    form2 = ChangePassword()
+    form2 = CreatePost()
     post = POSTS.query.filter_by(id=post_id).first()
     if post is not None:
-        return render_template("change_password.html", form=form, form1=form1, form2=form2, admin_key=admin_key,
+        return render_template("change_title.html", form=form, form1=form1, form2=form2, admin_key=admin_key,
                                post=post)
     else:
-        return redirect(url_for("users_control"))
+        return redirect(url_for("posts_control"))
 
 
-@app.route('/posts_control/change_a/<int:post_id>', methods=['GET', 'POST'])
+@app.route('/change_t/<int:post_id>', methods=['GET', 'POST'])
+def change_title(post_id):
+    title = request.form.get('title')
+    post = POSTS.query.filter_by(id=post_id).first()
+    post.title = title
+    db.session.commit()
+    return redirect(url_for("posts_control"))
+
+
+@app.route('/posts_control/change_author/<int:post_id>', methods=['GET', 'POST'])
 def admin_change_author(post_id):
     form = RegistrationForm()
     form1 = LoginForm()
-    form2 = ChangePassword()
+    users = USERS.query.all()
     post = POSTS.query.filter_by(id=post_id).first()
     if post is not None:
-        return render_template("change_password.html", form=form, form1=form1, form2=form2, admin_key=admin_key,
+        return render_template("change_author.html", form=form, form1=form1, users=users, admin_key=admin_key,
                                post=post)
     else:
-        return redirect(url_for("users_control"))
+        return redirect(url_for("posts_control"))
+
+
+@app.route('/change_a/<int:post_id>', methods=['GET', 'POST'])
+def change_author(post_id):
+    author = request.form.get('author')
+    if len(author) > 2:
+        post = POSTS.query.filter_by(id=post_id).first()
+        post.author = author
+        db.session.commit()
+    return redirect(url_for("posts_control"))
 
 
 @app.route('/posts_control/change_text/<int:post_id>', methods=['GET', 'POST'])
 def admin_change_text(post_id):
     form = RegistrationForm()
     form1 = LoginForm()
-    form2 = ChangePassword()
     post = POSTS.query.filter_by(id=post_id).first()
     if post is not None:
-        return render_template("change_password.html", form=form, form1=form1, form2=form2, admin_key=admin_key,
+        return render_template("change_text.html", form=form, form1=form1, admin_key=admin_key,
                                post=post)
     else:
-        return redirect(url_for("users_control"))
+        return redirect(url_for("posts_control"))
+
+
+@app.route('/change_te/<int:post_id>', methods=['GET', 'POST'])
+def change_text(post_id):
+    text = request.form.get('text')
+    if len(text) >= 10:
+        post = POSTS.query.filter_by(id=post_id).first()
+        post.text = text
+        db.session.commit()
+    return redirect(url_for("posts_control"))
 
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

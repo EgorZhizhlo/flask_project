@@ -1,0 +1,41 @@
+{% extends "main.html" %}
+{% block contents %}
+    {% if current_user.admin_key != admin_key %}
+        <center>
+            <h1 style="margin-top: 15%; color: #d1dfff">ВЫ НЕ АДМИНИСТРАТОР</h1>
+            <a href="/" class="btn" style="color: #002137; background: #d1dfff; margin-top: 10%">
+                <h3>Главная страница</h3>
+            </a>
+        </center>
+    {% else %}
+        <form method="post" action="/change_a/{{ post.id }}">
+            <center>
+                <div style="margin-top: 10%; margin-bottom: 1%">
+                    <h1 style="color: #75a2e0">Выберите нового автора для поста {{ post.id }}</h1>
+                </div>
+                <div style="margin-top: 1%; margin-bottom: 1%">
+                    <h1 style="color: #75a2e0">Прошлый автор поста {{ post.id }}: {{ post.email }}</h1>
+                </div>
+                <h3>
+                    <label style="color: #75a2e0" for="author">
+                        Новый автор поста:
+                    </label>
+                    <select name="author" style="background: #b1bcbe; color: black; border-radius: 10px;">
+                        <option value="{">Выбери автора поста...</option>
+                        {% for user in users %}
+                            <option value="{{ user.username }}">{{ user.username }}</option>
+                        {% endfor %}
+                    </select>
+                </h3>
+                <div style="margin-top: 2%">
+                    <a href="/users_control/" class="btn" style="color: #002137; background: #d1dfff; margin-right: 3%">
+                        <h3>Меню пользователей</h3>
+                    </a>
+                    <button type="submit" style="color: #002137; background: #d1dfff" class="btn btn-primary">
+                        <h3>Сохранить изменения</h3>
+                    </button>
+                </div>
+            </center>
+        </form>
+    {% endif %}
+{% endblock contents %}

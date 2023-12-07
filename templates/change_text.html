@@ -1,0 +1,40 @@
+{% extends "main.html" %}
+{% block contents %}
+    {% if current_user.admin_key != admin_key %}
+        <center>
+            <h1 style="margin-top: 15%; color: #d1dfff">ВЫ НЕ АДМИНИСТРАТОР</h1>
+            <a href="/" class="btn" style="color: #002137; background: #d1dfff; margin-top: 10%">
+                <h3>Главная страница</h3>
+            </a>
+        </center>
+    {% else %}
+        <form method="post" action="/change_te/{{ post.id }}">
+            <center>
+                <div style="margin-top: 10%; margin-bottom: 1%">
+                    <h1 style="color: #75a2e0">Введите новый текст для поста {{ post.id }}</h1>
+                </div>
+                <div style="margin-top: 1%; margin-bottom: 1%">
+                    <h1 style="color: #75a2e0">Прошлый текст для поста {{ post.id }}: </h1>
+
+                    <h1 style="margin-top: 1%; color: #75a2e0"> {{ post.text }}</h1>
+                </div>
+                <h3>
+                    <label style="color: #75a2e0" for="text">
+                        Новый текст:
+                    </label>
+                </h3>
+                <textarea id="text" name="text" rows="4" cols="75" maxlength="1000" minlength="10"
+                          placeholder="Текст поста..."
+                          style="font-size: 28px; background: #b1bcbe; color: black; border-radius: 10px;"></textarea>
+                <div style="margin-top: 2%">
+                    <a href="/users_control/" class="btn" style="color: #002137; background: #d1dfff; margin-right: 3%">
+                        <h3>Меню пользователей</h3>
+                    </a>
+                    <button type="submit" style="color: #002137; background: #d1dfff" class="btn btn-primary">
+                        <h3>Сохранить изменения</h3>
+                    </button>
+                </div>
+            </center>
+        </form>
+    {% endif %}
+{% endblock contents %}
