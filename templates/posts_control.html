@@ -6,16 +6,61 @@
             <a href="/" class="btn" style="color: #002137; background: #d1dfff; margin-top: 10%">Главная страница</a>
         </center>
     {% else %}
-        <div>
-        </div>
+        {% include 'admin_create_posts.html' %}
         <div>
             <center>
-                <a href="/admin_panel/" class="btn"
-                   style="color: #002137; background: #d1dfff; margin-top: 3%; margin-right: 2%"><h3>
-                    Панель администратора</h3></a>
-                <a href="/" class="btn" style="color: #002137; background: #d1dfff; margin-top: 3%"><h3>
-                    Главная страница</h3></a>
+                <div style="margin-top: 3%;">
+                    <a href="/admin_panel/" class="btn"
+                       style="color: #002137; background: #d1dfff;margin-right: 2%">
+                        <h3>Панель администратора</h3>
+                    </a>
+                    <a href="/" class="btn"
+                       style="color: #002137; background: #d1dfff;margin-right: 2%">
+                        <h3>Главная страница</h3>
+                    </a>
+                    <a href="#createPostModal" data-bs-toggle="modal" class="btn"
+                       style="color: #002137; background: #d1dfff;">
+                        <h3>Создать запись</h3>
+                    </a>
+                </div>
             </center>
         </div>
+        {% for post in posts %}
+            <div style="margin-top: 1%; margin-bottom: 1%">
+                <div class="container-fluid container-sm">
+                    <div class="row align-items-start">
+                        <div class="col">
+                            <div class="bg-image card shadow-1-strong"
+                                 style="background: #00416a;">
+                                <div class="card-body" align="justify">
+                                    <h1 style="color: #d1dfff"> {{ post.title }}</h1>
+                                    <h2 style="color: #d1dfff"> {{ post.author }}</h2>
+                                    <hr style="color: #d1dfff; border-width: 5px;">
+                                    <h3 style="color: #d1dfff"> {{ post.text }}</h3>
+                                    <center>
+                                        <a href="/users_control/change_username/{{ post.id }}" class="btn"
+                                           style="color:#002137;background:#d1dfff;margin-top:1%;margin-right:2%;">
+                                            <h5>Изменить название поста</h5>
+                                        </a>
+                                        <a href="/users_control/change_email/{{ post.id }}" class="btn"
+                                           style="color:#002137;background:#d1dfff;margin-top:1%;margin-right:2%;">
+                                            <h5>Изменить автора поста</h5>
+                                        </a>
+                                        <a href="/users_control/change_password/{{ post.id }}" class="btn"
+                                           style="color:#002137;background:#d1dfff;margin-top:1%;margin-right:2%;">
+                                            <h5>Изменить текст поста</h5>
+                                        </a>
+                                        <a href="/delete_post/{{ admin_key }}/{{ post.id }}" class="btn"
+                                           style="color: #002137; background: #d1dfff; margin-top: 1%;">
+                                            <h5>Удалить пост</h5>
+                                        </a>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     {% endif %}
 {% endblock contents %}

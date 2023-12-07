@@ -26,3 +26,7 @@ class ChangeEmail(FlaskForm):
 class ChangePassword(FlaskForm):
     password = PasswordField("Email: ", validators=[Length(min=8, max=25), EqualTo("repeat_password")], name='password')
     repeat_password = PasswordField("Email: ", validators=[Length(min=8, max=25)], name='repeat_password')
+
+
+class CreatePost(FlaskForm):
+    title = StringField("Title: ", validators=[Length(min=10, max=100), DataRequired()], name='title')

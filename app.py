@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from static.forms import RegistrationForm, LoginForm, ChangeUsername, ChangeEmail, ChangePassword
+from static.forms import RegistrationForm, LoginForm, ChangeUsername, ChangeEmail, ChangePassword, CreatePost
 from flask_login import LoginManager, login_user, UserMixin, login_required, logout_user
 
 app = Flask(__name__)
@@ -26,6 +26,14 @@ class USERS(db.Model, UserMixin):
     admin_key = db.Column(db.String(400), unique=True)
 
 
+class POSTS(db.Model, UserMixin):
+    __tablename__ = 'posts'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), unique=True, nullable=False)
+    author = db.Column(db.String(120), unique=True, nullable=False)
+    text = db.Column(db.String(1000), unique=True, nullable=False)
+
+
 with app.app_context():
     db.create_all()
 
@@ -41,36 +49,36 @@ def main():
     form = RegistrationForm()
     form1 = LoginForm()
     create_superuser()
-
-    return render_template("main.html", form=form, form1=form1, admin_key=admin_key)
+    posts = POSTS.query.all()
+    return render_template("main.html", form=form, form1=form1, admin_key=admin_key, posts=posts)
 
 
 @app.route('/about/')
 def about():
     form = RegistrationForm()
     form1 = LoginForm()
-    return render_template("about.html", form=form, form1=form1)
+    return render_template("about.html", form=form, admin_key=admin_key, form1=form1)
 
 
 @app.route('/science/')
 def science():
     form = RegistrationForm()
     form1 = LoginForm()
-    return render_template("science.html", form=form, form1=form1)
+    return render_template("science.html", form=form, admin_key=admin_key, form1=form1)
 
 
 @app.route('/entertainment/')
 def entertainment():
     form = RegistrationForm()
     form1 = LoginForm()
-    return render_template("entertainment.html", form=form, form1=form1)
+    return render_template("entertainment.html", form=form, admin_key=admin_key, form1=form1)
 
 
 @app.route('/neanderthal/')
 def neanderthal():
     form = RegistrationForm()
     form1 = LoginForm()
-    return render_template("neanderthal.html", form=form, form1=form1)
+    return render_template("neanderthal.html", form=form, admin_key=admin_key, form1=form1)
 
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -146,7 +154,11 @@ def admin_panel():
 def posts_control():
     form = RegistrationForm()
     form1 = LoginForm()
-    return render_template("posts_control.html", form=form, form1=form1, admin_key=admin_key)
+    form2 = CreatePost()
+    posts = POSTS.query.all()
+    users = USERS.query.all()
+    return render_template("posts_control.html", form=form, form1=form1, form2=form2, admin_key=admin_key, posts=posts,
+                           users=users)
 
 
 @app.route('/users_control/', methods=['GET', 'POST'])
@@ -156,6 +168,12 @@ def users_control():
     form1 = LoginForm()
     users = USERS.query.all()
     return render_template("users_control.html", form=form, form1=form1, admin_key=admin_key, users=users)
+
+
+# \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+# user control
+# ////////////////////////////////////////////////////////
 
 
 @app.route('/users_control/change_username/<int:user_id>', methods=['GET', 'POST'])
@@ -264,6 +282,70 @@ def admin_create_user():
                 db.session.add(USERS(username=username, email=email, password=n_password, repeat_password=n_password))
                 db.session.commit()
     return redirect(url_for("users_control"))
+
+
+# \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+# post control
+# ////////////////////////////////////////////////////////
+
+
+@app.route('/posts_control/create_post', methods=['GET', 'POST'])
+def admin_create_post():
+    title = request.form.get('title')
+    author = request.form.get('author')
+    text = request.form.get('text')
+    if text is not None:
+        db.session.add(POSTS(title=title, author=author, text=text))
+        db.session.commit()
+        return redirect(url_for("posts_control"))
+
+
+@app.route(f'/delete_post/{admin_key}/<int:post_id>', methods=['GET', 'POST'])
+def admin_delete_post(post_id):
+    post = POSTS.query.filter_by(id=post_id).first()
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(url_for("posts_control"))
+
+
+@app.route('/posts_control/change_t/<int:post_id>', methods=['GET', 'POST'])
+def admin_change_title(post_id):
+    form = RegistrationForm()
+    form1 = LoginForm()
+    form2 = ChangePassword()
+    post = POSTS.query.filter_by(id=post_id).first()
+    if post is not None:
+        return render_template("change_password.html", form=form, form1=form1, form2=form2, admin_key=admin_key,
+                               post=post)
+    else:
+        return redirect(url_for("users_control"))
+
+
+@app.route('/posts_control/change_a/<int:post_id>', methods=['GET', 'POST'])
+def admin_change_author(post_id):
+    form = RegistrationForm()
+    form1 = LoginForm()
+    form2 = ChangePassword()
+    post = POSTS.query.filter_by(id=post_id).first()
+    if post is not None:
+        return render_template("change_password.html", form=form, form1=form1, form2=form2, admin_key=admin_key,
+                               post=post)
+    else:
+        return redirect(url_for("users_control"))
+
+
+@app.route('/posts_control/change_text/<int:post_id>', methods=['GET', 'POST'])
+def admin_change_text(post_id):
+    form = RegistrationForm()
+    form1 = LoginForm()
+    form2 = ChangePassword()
+    post = POSTS.query.filter_by(id=post_id).first()
+    if post is not None:
+        return render_template("change_password.html", form=form, form1=form1, form2=form2, admin_key=admin_key,
+                               post=post)
+    else:
+        return redirect(url_for("users_control"))
 
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

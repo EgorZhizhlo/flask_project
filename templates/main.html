@@ -9,9 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
             crossorigin="anonymous"></script>
-    {% include 'modal_auntification.html' %}
-    {% include 'modal_registration.html' %}
-    {% include 'admin_create_users.html' %}
+    {% include 'modal_windows.html' %}
 </head>
 <body style="background: #002137">
 <header>
@@ -34,17 +32,17 @@
                             <a class="nav-link dropdown-toggle" style="color: #5c86b5" href="#"
                                id="navbarScrollingDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">Разделы</a>
-                            <ul class="dropdown-menu" style="background: dimgray"
+                            <ul class="dropdown-menu" style="background: #1e1f22"
                                 aria-labelledby="navbarScrollingDropdown">
-                                <li><a style="background: dimgray; color: #bdbdf2" class="dropdown-item"
+                                <li><a style="background: #1e1f22; color: #bdbdf2" class="dropdown-item"
                                        href="/science">Наука</a></li>
-                                <li><a style="background: dimgray; color: #bdbdf2" class="dropdown-item"
+                                <li><a style="background: #1e1f22; color: #bdbdf2" class="dropdown-item"
                                        href="/entertainment">Развлечения</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a style="background: dimgray; color: #bdbdf2"
+                                    <a style="background: #1e1f22; color: #bdbdf2"
                                        class="dropdown-item"
                                        href="/neanderthal">
                                         О Неандертальцах
@@ -85,125 +83,25 @@
     {% endblock mainmenu %}
 </header>
 {% block contents %}
-    <div style="margin-top: 1%; margin-bottom: 1%">
-        <div class="container-fluid">
-            <div class="row align-items-start">
-                <div class="col">
-                    <div class="bg-image card shadow-1-strong"
-                         style="background: #00416a;">
-                        <div class="card-body" align="justify">
-                            <h1 style="color: #d1dfff"> ПРИМЕР</h1>
-                            <h2 style="color: #d1dfff"> ПРИМЕР</h2>
-                            <hr style="color: #d1dfff; border-width: 5px;">
-                            <h3 style="color: #d1dfff"> ПРИМЕР</h3>
+    {% for post in posts %}
+        <div style="margin-top: 2%; margin-bottom: 1%">
+            <div class="container-fluid">
+                <div class="row align-items-start">
+                    <div class="col">
+                        <div class="bg-image card shadow-1-strong"
+                             style="background: #00416a;">
+                            <div class="card-body" align="justify">
+                                <h1 style="color: #d1dfff"> {{ post.title }}</h1>
+                                <h2 style="color: #d1dfff"> {{ post.author }}</h2>
+                                <hr style="color: #d1dfff; border-width: 5px;">
+                                <h3 style="color: #d1dfff"> {{ post.text }}</h3>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div style="margin-top: 1%; margin-bottom: 1%">
-        <div class="container-fluid">
-            <div class="row align-items-start">
-                <div class="col">
-                    <div class="bg-image card shadow-1-strong"
-                         style="background: #00416a;">
-                        <div class="card-body text-white">
-                            <h1 style="color: #d1dfff"> ПРИМЕР</h1>
-                            <h2 style="color: #d1dfff"> ПРИМЕР</h2>
-                            <hr style="color: #d1dfff; border-width: 5px;">
-                            <h3 style="color: #d1dfff"> ПРИМЕР</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="margin-top: 1%; margin-bottom: 1%">
-        <div class="container-fluid">
-            <div class="row align-items-start">
-                <div class="col">
-                    <div class="bg-image card shadow-1-strong"
-                         style="background: #00416a;">
-                        <div class="card-body text-white">
-                            <h1 style="color: #d1dfff"> ПРИМЕР</h1>
-                            <h2 style="color: #d1dfff"> ПРИМЕР</h2>
-                            <hr style="color: #d1dfff; border-width: 5px;">
-                            <h3 style="color: #d1dfff"> ПРИМЕР</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="margin-top: 1%; margin-bottom: 1%">
-        <div class="container-fluid">
-            <div class="row align-items-start">
-                <div class="col">
-                    <div class="bg-image card shadow-1-strong"
-                         style="background: #00416a;">
-                        <div class="card-body text-white">
-                            <h1 style="color: #d1dfff"> ПРИМЕР</h1>
-                            <h2 style="color: #d1dfff"> ПРИМЕР</h2>
-                            <hr style="color: #d1dfff; border-width: 5px;">
-                            <h3 style="color: #d1dfff"> ПРИМЕР</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="margin-top: 1%; margin-bottom: 1%">
-        <div class="container-fluid">
-            <div class="row align-items-start">
-                <div class="col">
-                    <div class="bg-image card shadow-1-strong"
-                         style="background: #00416a;">
-                        <div class="card-body text-white">
-                            <h1 style="color: #d1dfff"> ПРИМЕР</h1>
-                            <h2 style="color: #d1dfff"> ПРИМЕР</h2>
-                            <hr style="color: #d1dfff; border-width: 5px;">
-                            <h3 style="color: #d1dfff"> ПРИМЕР</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="margin-top: 1%; margin-bottom: 1%">
-        <div class="container-fluid">
-            <div class="row align-items-start">
-                <div class="col">
-                    <div class="bg-image card shadow-1-strong"
-                         style="background: #00416a;">
-                        <div class="card-body">
-                            <h1 style="color: #d1dfff"> ПРИМЕР</h1>
-                            <h2 style="color: #d1dfff"> ПРИМЕР</h2>
-                            <hr style="color: #d1dfff; border-width: 5px;">
-                            <h3 style="color: #d1dfff"> ПРИМЕР</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="margin-top: 1%; margin-bottom: 1%">
-        <div class="container-fluid">
-            <div class="row align-items-start">
-                <div class="col">
-                    <div class="bg-image card shadow-1-strong"
-                         style="background: #00416a;">
-                        <div class="card-body text-white">
-                            <h1 style="color: #d1dfff"> ПРИМЕР</h1>
-                            <h2 style="color: #d1dfff"> ПРИМЕР</h2>
-                            <hr style="color: #d1dfff; border-width: 5px;">
-                            <h3 style="color: #d1dfff"> ПРИМЕР</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% endfor %}
 {% endblock contents %}
 </body>
 </html>

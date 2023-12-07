@@ -1,0 +1,45 @@
+<div class="modal fade" id="createPostModal" tabindex="-1" aria-labelledby="regModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" style="background: #323638; color: #d1dfff; border-radius: 10px;">
+            <form method="post" action="/posts_control/create_post">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="regModalLabel">Супер блог Неандертальца | <br>Новый пользователь</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <center>
+                        <h3>
+                            <label for="title">
+                                Название поста:
+                            </label>
+                            {{ form2.title(class="input", style="background: #b1bcbe; color: black; border-radius: 10px;") }}
+                        </h3>
+                        <h3>
+                            <label for="author">
+                                Автор поста:
+                            </label>
+                            <select name="author" style="background: #b1bcbe; color: black; border-radius: 10px;">
+                                <option value="{">Выбери автора поста...</option>
+                                {% for user in users %}
+                                    <option value="{{ user.username }}">{{ user.username }}</option>
+                                {% endfor %}
+                            </select>
+                        </h3>
+                        <h3>
+                            <label for="text">
+                                Текст:
+                            </label>
+                        </h3>
+                        <textarea id="text" name="text" rows="4" cols="75" maxlength="1000" minlength="10"
+                                  placeholder="Текст поста..."
+                                  style="font-size: 28px; background: #b1bcbe; color: black; border-radius: 10px;"></textarea>
+                    </center>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" style="background: #d1dfff; color: #323638;" class="btn btn-primary"><h5>
+                        Создать</h5></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
