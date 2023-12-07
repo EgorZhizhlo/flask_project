@@ -21,17 +21,17 @@ class USERS(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(400), unique=True, nullable=False)
-    repeat_password = db.Column(db.String(400), unique=True, nullable=False)
-    admin_key = db.Column(db.String(400), unique=True)
+    password = db.Column(db.String(400), unique=False, nullable=False)
+    repeat_password = db.Column(db.String(400), unique=False, nullable=False)
+    admin_key = db.Column(db.String(400), unique=False)
 
 
 class POSTS(db.Model, UserMixin):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), unique=True, nullable=False)
-    author = db.Column(db.String(120), unique=True, nullable=False)
-    text = db.Column(db.String(1000), unique=True, nullable=False)
+    title = db.Column(db.String(100), unique=False, nullable=False)
+    author = db.Column(db.String(120), unique=False, nullable=False)
+    text = db.Column(db.String(1000), unique=False, nullable=False)
 
 
 with app.app_context():
@@ -46,10 +46,11 @@ with app.app_context():
 
 @app.route('/')
 def main():
+    page = request.args.get('page', 1, type=int)
     form = RegistrationForm()
     form1 = LoginForm()
     create_superuser()
-    posts = POSTS.query.all()
+    posts = POSTS.query.paginate(page=page, per_page=3)
     return render_template("main.html", form=form, form1=form1, admin_key=admin_key, posts=posts)
 
 
@@ -292,17 +293,21 @@ def admin_create_user():
 
 
 @app.route('/posts_control/create_post', methods=['GET', 'POST'])
+@login_required
 def admin_create_post():
     title = request.form.get('title')
     author = request.form.get('author')
     text = request.form.get('text')
-    if text is not None:
-        db.session.add(POSTS(title=title, author=author, text=text))
-        db.session.commit()
-        return redirect(url_for("posts_control"))
+    if len(text) >= 10:
+        if len(author) > 2:
+            if len(title) >= 10:
+                db.session.add(POSTS(title=title, author=author, text=text))
+                db.session.commit()
+    return redirect(url_for("posts_control"))
 
 
 @app.route(f'/delete_post/{admin_key}/<int:post_id>', methods=['GET', 'POST'])
+@login_required
 def admin_delete_post(post_id):
     post = POSTS.query.filter_by(id=post_id).first()
     db.session.delete(post)
@@ -311,6 +316,7 @@ def admin_delete_post(post_id):
 
 
 @app.route('/posts_control/change_title/<int:post_id>', methods=['GET', 'POST'])
+@login_required
 def admin_change_title(post_id):
     form = RegistrationForm()
     form1 = LoginForm()
@@ -324,15 +330,18 @@ def admin_change_title(post_id):
 
 
 @app.route('/change_t/<int:post_id>', methods=['GET', 'POST'])
+@login_required
 def change_title(post_id):
     title = request.form.get('title')
-    post = POSTS.query.filter_by(id=post_id).first()
-    post.title = title
-    db.session.commit()
+    if len(title) >= 10:
+        post = POSTS.query.filter_by(id=post_id).first()
+        post.title = title
+        db.session.commit()
     return redirect(url_for("posts_control"))
 
 
 @app.route('/posts_control/change_author/<int:post_id>', methods=['GET', 'POST'])
+@login_required
 def admin_change_author(post_id):
     form = RegistrationForm()
     form1 = LoginForm()
@@ -346,6 +355,7 @@ def admin_change_author(post_id):
 
 
 @app.route('/change_a/<int:post_id>', methods=['GET', 'POST'])
+@login_required
 def change_author(post_id):
     author = request.form.get('author')
     if len(author) > 2:
@@ -356,6 +366,7 @@ def change_author(post_id):
 
 
 @app.route('/posts_control/change_text/<int:post_id>', methods=['GET', 'POST'])
+@login_required
 def admin_change_text(post_id):
     form = RegistrationForm()
     form1 = LoginForm()
@@ -368,6 +379,7 @@ def admin_change_text(post_id):
 
 
 @app.route('/change_te/<int:post_id>', methods=['GET', 'POST'])
+@login_required
 def change_text(post_id):
     text = request.form.get('text')
     if len(text) >= 10:
