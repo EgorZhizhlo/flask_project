@@ -92,6 +92,11 @@
                                 src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
                         </script>
                     </ul>
+                    <form class="d-flex" action="{{ url_for('search') }}" method="get">
+                        <input class="form-control me-2" type="search" placeholder="Поиск..."
+                               aria-label="Search" name="search">
+                        <button class="btn btn-outline-secondary" type="submit">Поиск</button>
+                    </form>
                 </div>
             </div>
         </nav>
@@ -110,6 +115,12 @@
                                 <h2 style="color: #d1dfff"> {{ post.author }}</h2>
                                 <hr style="color: #d1dfff; border-width: 5px;">
                                 <h3 style="color: #d1dfff"> {{ post.text }}</h3>
+                                <a href="/about_post/{{ post.id }}">
+                                    <button type="button" class="btn btn-primary"
+                                            style="background: #1e1f22; color: #d1dfff; margin-left: 90%">
+                                        Подробнее...
+                                    </button>
+                                </a>
                             </div>
                         </div>
                     </div>

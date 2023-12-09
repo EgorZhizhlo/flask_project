@@ -54,6 +54,26 @@ def main():
     return render_template("main.html", form=form, form1=form1, admin_key=admin_key, posts=posts)
 
 
+@app.route('/about_post/<int:post_id>')
+def about_post(post_id):
+    form = RegistrationForm()
+    form1 = LoginForm()
+    post = POSTS.query.filter_by(id=post_id).first()
+    return render_template("about_post.html", form=form, form1=form1, admin_key=admin_key, post=post)
+
+
+@app.route('/search')
+def search():
+    search = '%{}%'.format(request.args.get('search'))
+    form = RegistrationForm()
+    form1 = LoginForm()
+    page = request.args.get('page', 1, type=int)
+    print(search)
+    posts = POSTS.query.filter(POSTS.title.like(search) | POSTS.author.like(search) | POSTS.text.like(search)).paginate(
+        page=page, per_page=3)
+    return render_template("search.html", form=form, form1=form1, admin_key=admin_key, posts=posts, search=search)
+
+
 @app.route('/about/')
 def about():
     form = RegistrationForm()
@@ -298,9 +318,9 @@ def admin_create_post():
     title = request.form.get('title')
     author = request.form.get('author')
     text = request.form.get('text')
-    if len(text) >= 10:
+    if len(text) >= 1:
         if len(author) > 2:
-            if len(title) >= 10:
+            if len(title) >= 1:
                 db.session.add(POSTS(title=title, author=author, text=text))
                 db.session.commit()
     return redirect(url_for("posts_control"))
@@ -333,7 +353,7 @@ def admin_change_title(post_id):
 @login_required
 def change_title(post_id):
     title = request.form.get('title')
-    if len(title) >= 10:
+    if len(title) >= 1:
         post = POSTS.query.filter_by(id=post_id).first()
         post.title = title
         db.session.commit()
@@ -382,7 +402,7 @@ def admin_change_text(post_id):
 @login_required
 def change_text(post_id):
     text = request.form.get('text')
-    if len(text) >= 10:
+    if len(text) >= 1:
         post = POSTS.query.filter_by(id=post_id).first()
         post.text = text
         db.session.commit()

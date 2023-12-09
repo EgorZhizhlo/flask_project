@@ -29,4 +29,4 @@ class ChangePassword(FlaskForm):
 
 
 class CreatePost(FlaskForm):
-    title = StringField("Title: ", validators=[Length(min=10, max=100), DataRequired()], name='title')
+    title = StringField("Title: ", validators=[Length(min=1, max=100), DataRequired()], name='title')
