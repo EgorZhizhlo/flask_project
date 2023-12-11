@@ -1,0 +1,68 @@
+{% extends 'main.html' %}
+{% block contents %}
+    <div style="margin-top: 2%; margin-bottom: 1%">
+        <div class="container-fluid">
+            <div class="row align-items-start">
+                <div class="col">
+                    <div class="bg-image card shadow-1-strong"
+                         style="background: #00416a;">
+                        <div class="card-body" align="justify">
+                            <form action="{{ url_for('big_search') }}" method="get">
+                                <center>
+                                    <class class="d-flex">
+                                        <input class="form-control me-2" style="background: #bdbdf2; color: #1e1f22"
+                                               type="search"
+                                               placeholder="Поиск..."
+                                               aria-label="Search" name="search">
+                                        <button class="btn btn-outline-secondary" type="submit">Поиск</button>
+                                    </class>
+                                </center>
+                                <div class="form-check" style="float: right">
+                                    <input type="checkbox" value="4" id="body" name="chbox">
+                                    <label for="body" style="color: #bdbdf2"><h4>Текст поста</h4></label>
+                                </div>
+                                <div class="form-check" style="float: right">
+                                    <input type="checkbox" value="3" id="title" name="chbox">
+                                    <label for="title" style="color: #bdbdf2"><h4>Название поста</h4></label>
+                                </div>
+                                <div class="form-check" style="float: right">
+                                    <input type="checkbox" value="2" id="author_date_joined" name="chbox">
+                                    <label for="author_date_joined" style="color: #bdbdf2"><h4>Email автора</h4></label>
+                                </div>
+                                <div class="form-check" style="float: right">
+                                    <input type="checkbox" value="1" id="author_username" name="chbox">
+                                    <label for="author_username" style="color: #bdbdf2"><h4>Логин автора</h4></label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% for post in posts %}
+        <div style="margin-top: 2%; margin-bottom: 1%">
+            <div class="container-fluid">
+                <div class="row align-items-start">
+                    <div class="col">
+                        <div class="bg-image card shadow-1-strong"
+                             style="background: #00416a;">
+                            <div class="card-body" align="justify">
+                                <h1 style="color: #d1dfff"> {{ post.title }}</h1>
+                                <h2 style="color: #d1dfff"> {{ post.author }}</h2>
+                                <hr style="color: #d1dfff; border-width: 5px;">
+                                <h3 style="color: #d1dfff"> {{ post.text }}</h3>
+                                <a href="/about_post/{{ post.id }}">
+                                    <button type="button" class="btn btn-primary"
+                                            style="background: #1e1f22; color: #d1dfff; margin-left: 90%">
+                                        Подробнее...
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock contents %}

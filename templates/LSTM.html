@@ -1,0 +1,56 @@
+{% extends 'main.html' %}
+{% block contents %}
+    <div style="margin-top: 2%; margin-bottom: 1%">
+        <div class="container-fluid">
+            <div class="row align-items-start">
+                <div class="col">
+                    <div class="bg-image card shadow-1-strong"
+                         style="background: #00416a;">
+                        <div class="card-body" align="justify">
+                            <center>
+                                <a href="{{ url_for('LSTM_n') }}" class="btn"
+                                   style="color: #002137; background: #d1dfff;"><h3>СДЕЛАТЬ ПРОГНОЗ</h3></a>
+                                <hr style="color: #d1dfff; border-width: 5px;">
+                                <form method="post">
+                                    {% if c_lstm > 0 %}
+                                        <table style="width: 100%; height: 100%">
+                                            <thead>
+                                            <th><h1 style="color: #d1dfff;"> | | </h1></th>
+                                            <th><h1 style="color: #d1dfff;">Year</h1></th>
+                                            <th><h1 style="color: #d1dfff;"> | | </h1></th>
+                                            <th><h1 style="color: #d1dfff;">Month</h1></th>
+                                            <th><h1 style="color: #d1dfff;"> | | </h1></th>
+                                            <th><h1 style="color: #d1dfff;">Passengers</h1></th>
+                                            <th><h1 style="color: #d1dfff;"> | | </h1></th>
+                                            <th><h1 style="color: #d1dfff;">Predictions</h1></th>
+                                            <th><h1 style="color: #d1dfff;"> | | </h1></th>
+                                            <th><h1 style="color: #d1dfff;">Error</h1></th>
+                                            <th><h1 style="color: #d1dfff;"> | | </h1></th>
+                                            </thead>
+                                            {% for i in lstm %}
+                                                <tr>
+                                                    <th><h1 style="color: #d1dfff;"> | | </h1></th>
+                                                    <td><h1 style="color: #d1dfff;">{{ i.year }}</h1></td>
+                                                    <th><h1 style="color: #d1dfff;"> | | </h1></th>
+                                                    <td><h1 style="color: #d1dfff;">{{ i.month }}</h1></td>
+                                                    <th><h1 style="color: #d1dfff;"> | | </h1></th>
+                                                    <td><h1 style="color: #d1dfff;">{{ i.passengers }}</h1></td>
+                                                    <th><h1 style="color: #d1dfff;"> | | </h1></th>
+                                                    <td><h1 style="color: #d1dfff;">{{ i.predictions }}</h1></td>
+                                                    <th><h1 style="color: #d1dfff;"> | | </h1></th>
+                                                    <td><h1 style="color: #d1dfff;">{{ i.wrong_answer }}</h1></td>
+                                                    <th><h1 style="color: #d1dfff;"> | | </h1></th>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    {% endif %}
+                                </form>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="/" class="btn" style="color: #1e1f22; background: #75a2e0; position: absolute; left: 1%"><</a>
+{% endblock %}

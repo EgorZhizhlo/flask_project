@@ -56,12 +56,24 @@
                                 <li class="nav-item">
                                     <a class="nav-link active"
                                        style="color: #006bf6" aria-current="page"
-                                       href="/admin_panel/">Логин: {{ current_user.username }}</a>
+                                       href="/admin_panel/">Логин:
+                                        {% if current_user.username|length > 10 %}
+                                            {{ (current_user.username)[:10] + '...' }}
+                                        {% else %}
+                                            {{ current_user.username }}
+                                        {% endif %}
+                                    </a>
                                 </li>
                             {% else %}
                                 <li class="nav-item">
                                     <a class="nav-link disabled"
-                                       style="color: #006bf6">Логин: {{ current_user.username }}</a>
+                                       style="color: #006bf6">Логин:
+                                        {% if current_user.username|length > 10 %}
+                                            {{ (current_user.username)[:10] + '...' }}
+                                        {% else %}
+                                            {{ current_user.username }}
+                                        {% endif %}
+                                    </a>
                                 </li>
                             {% endif %}
                             <li class="nav-item">
@@ -77,6 +89,14 @@
                             <a class="nav-link active" style="color: #75a2e0" href="#regModal"
                                data-bs-toggle="modal">Регистрация</a>
                         {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link active" style="color: #ea4a4a" aria-current="page"
+                               href="{{ url_for('LSTM_site_view') }}">LSTM</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" style="color: #dc56ea" aria-current="page"
+                               href="{{ url_for('big_search') }}">Расширенный поиск</a>
+                        </li>
                         <div id="google_translate_element"></div>
 
                         <script type="text/javascript">
@@ -94,7 +114,7 @@
                     </ul>
                     <form class="d-flex" action="{{ url_for('search') }}" method="get">
                         <input class="form-control me-2" type="search" placeholder="Поиск..."
-                               aria-label="Search" name="search">
+                               aria-label="Search" name="search" style="background: #bdbdf2; color: #1e1f22">
                         <button class="btn btn-outline-secondary" type="submit">Поиск</button>
                     </form>
                 </div>
@@ -128,7 +148,7 @@
             </div>
         </div>
     {% endfor %}
-    <div style="color: #75a2e0">
+    <div style="color: #75a2e0; margin-left: 1%">
         {% for page in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
             {% if page %}
                 {% if posts.page == page %}
