@@ -542,7 +542,7 @@ def search():
 @app.route('/big_search', methods=['GET', 'POST'])
 def big_search():
     search = '%{}%'.format(request.args.get('search'))
-    chbox = request.args.getlist('chbox')
+    dc
     chbox.sort()
     form = RegistrationForm()
     form1 = LoginForm()
